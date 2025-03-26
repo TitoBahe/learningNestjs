@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class PostService {
@@ -11,7 +12,9 @@ export class PostService {
     return 'This action adds a new post';
   }
 
+  @Cron(CronExpression.EVERY_10_SECONDS, {name:'cronJob'})
   findAll() {
+    this.logger.debug('cron called');
     return `This action returns all post`;
   }
 

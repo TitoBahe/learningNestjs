@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Query, HttpException, HttpStatus, Catch, Logger } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Query, HttpException, HttpStatus, Catch, Logger, UseGuards } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import {postAuthorDto} from './dto/postAuthor.body.dto';
 import {allPosts} from './dto/getAllPosts.query.dto';
 import { PostAllService } from '../post-all/post-all.service';
+import { GuardKey } from './guard/api-key.guard';
 
 //olhar catch handlers 
+@UseGuards(GuardKey)
 @Controller('post') 
 export class PostController {
 
@@ -16,7 +18,7 @@ export class PostController {
   @Post()
   postAuthor(@Body() body: postAuthorDto){
     this.logger.warn(body)
-    // console.log(typeof body.age)
+    this.postService.findAll();
     return `Name: ${body.name} Age: ${body.age} Sex: ${body.sex}`
   }
 
