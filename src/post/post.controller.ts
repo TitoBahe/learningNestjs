@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Query, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Query, HttpException, HttpStatus, Catch, Logger } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -6,13 +6,17 @@ import {postAuthorDto} from './dto/postAuthor.body.dto';
 import {allPosts} from './dto/getAllPosts.query.dto';
 import { PostAllService } from '../post-all/post-all.service';
 
-@Controller('post')
+//olhar catch handlers 
+@Controller('post') 
 export class PostController {
+
+  private readonly logger = new Logger(PostController.name);
   constructor(private readonly postService: PostService, private postAllService : PostAllService) {}
 
   @Post()
   postAuthor(@Body() body: postAuthorDto){
-    console.log(typeof body.age)
+    this.logger.warn(body)
+    // console.log(typeof body.age)
     return `Name: ${body.name} Age: ${body.age} Sex: ${body.sex}`
   }
 

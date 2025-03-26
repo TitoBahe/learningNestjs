@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostService {
+
+  private readonly logger = new Logger(PostService.name);
+
   create(createPostDto: CreatePostDto) {
     return 'This action adds a new post';
   }
